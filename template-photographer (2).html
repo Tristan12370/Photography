@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Photography Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --cream: #F5F2EC; --dark: #1A1814; --mid: #3D3830; --muted: #8C8880;
+  --accent: #C4A882; --accent-dark: #9C7D58; --border: rgba(26,24,20,0.12);
+  --serif: 'Cormorant Garamond', Georgia, serif; --mono: 'DM Mono', monospace;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--cream); color: var(--dark); font-family: var(--serif); font-size: 18px; line-height: 1.6; overflow-x: hidden; }
+
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.5rem 3rem; display: flex; justify-content: space-between; align-items: center; background: rgba(245,242,236,0.85); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); }
+.nav-logo { font-family: var(--serif); font-size: 1.1rem; font-weight: 300; letter-spacing: 0.2em; text-transform: uppercase; color: var(--dark); text-decoration: none; }
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a { font-family: var(--mono); font-size: 0.7rem; font-weight: 300; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.3s; }
+.nav-links a:hover { color: var(--dark); }
+
+.hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; padding-top: 80px; }
+.hero-left { display: flex; flex-direction: column; justify-content: center; padding: 6rem 4rem 6rem 3rem; }
+.hero-eyebrow { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem; }
+.hero-eyebrow::before { content: ''; width: 40px; height: 1px; background: var(--accent); }
+.hero-title { font-family: var(--serif); font-size: clamp(3.5rem, 6vw, 5.5rem); font-weight: 300; line-height: 1.05; color: var(--dark); margin-bottom: 2rem; }
+.hero-title em { font-style: italic; color: var(--accent-dark); }
+.hero-desc { font-size: 1.05rem; font-weight: 300; color: var(--mid); line-height: 1.8; max-width: 380px; margin-bottom: 3rem; }
+.hero-cta { display: flex; gap: 1.5rem; align-items: center; }
+.btn-primary { background: var(--dark); color: var(--cream); padding: 1rem 2.5rem; font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none; transition: background 0.3s, transform 0.2s; display: inline-block; }
+.btn-primary:hover { background: var(--accent-dark); transform: translateY(-1px); }
+.btn-ghost { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: color 0.3s; }
+.btn-ghost:hover { color: var(--dark); }
+.btn-ghost::after { content: '↓'; transition: transform 0.3s; }
+.btn-ghost:hover::after { transform: translateY(3px); }
+
+.hero-right { position: relative; overflow: hidden; }
+.hero-img-wrap { position: absolute; inset: 0; }
+.hero-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.hero-img-placeholder { width: 100%; height: 100%; background: linear-gradient(145deg, #2D2A24 0%, #1A1814 60%, #3D3830 100%); display: flex; align-items: center; justify-content: center; color: var(--muted); font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; text-align: center; padding: 2rem; }
+
+.marquee-wrap { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 1rem 0; overflow: hidden; background: var(--dark); }
+.marquee-track { display: flex; gap: 3rem; animation: marquee 22s linear infinite; white-space: nowrap; }
+.marquee-item { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); flex-shrink: 0; }
+.marquee-dot { color: var(--accent); margin-right: 3rem; }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+.about { display: grid; grid-template-columns: 1fr 1fr; gap: 0; padding: 8rem 3rem; max-width: 1400px; margin: 0 auto; }
+.about-left { padding-right: 6rem; border-right: 1px solid var(--border); }
+.section-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent-dark); margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem; }
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.about-title { font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 300; line-height: 1.15; margin-bottom: 1.5rem; }
+.about-title em { font-style: italic; color: var(--accent-dark); }
+.about-text { font-size: 1rem; font-weight: 300; color: var(--mid); line-height: 1.9; }
+.about-right { padding-left: 6rem; display: flex; flex-direction: column; justify-content: center; }
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+.stat-num { font-size: 3rem; font-weight: 300; color: var(--dark); line-height: 1; margin-bottom: 0.3rem; }
+.stat-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+
+.portfolio { padding: 4rem 3rem 8rem; max-width: 1400px; margin: 0 auto; }
+.portfolio-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; }
+.portfolio-title { font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 300; }
+.portfolio-title em { font-style: italic; color: var(--accent-dark); }
+.portfolio-link { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: color 0.3s; }
+.portfolio-link:hover { color: var(--dark); }
+.portfolio-link::after { content: '→'; }
+
+.grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 1.5rem; }
+.grid-item { position: relative; overflow: hidden; cursor: pointer; }
+.grid-item:nth-child(1) { grid-column: span 7; grid-row: span 2; }
+.grid-item:nth-child(2) { grid-column: span 5; }
+.grid-item:nth-child(3) { grid-column: span 5; }
+.grid-item:nth-child(4) { grid-column: span 4; }
+.grid-item:nth-child(5) { grid-column: span 4; }
+.grid-item:nth-child(6) { grid-column: span 4; }
+.grid-photo { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s ease; }
+.grid-item:hover .grid-photo { transform: scale(1.04); }
+.grid-placeholder { width: 100%; aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(245,242,236,0.3); transition: transform 0.6s ease; }
+.grid-item:nth-child(1) .grid-placeholder { aspect-ratio: unset; height: 100%; min-height: 500px; }
+.grid-item:hover .grid-placeholder { transform: scale(1.04); }
+.g1 { background: linear-gradient(160deg, #2D2A24 0%, #1A1814 100%); }
+.g2 { background: linear-gradient(135deg, #3D3830 0%, #2A2720 100%); }
+.g3 { background: linear-gradient(160deg, #1A1814 0%, #2D2A24 100%); }
+.g4 { background: linear-gradient(135deg, #2D2A24 0%, #3D3830 100%); }
+.g5 { background: linear-gradient(160deg, #3D3830 0%, #1A1814 100%); }
+.g6 { background: linear-gradient(135deg, #2A2720 0%, #2D2A24 100%); }
+.grid-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 2rem 1.5rem 1.5rem; background: linear-gradient(transparent, rgba(26,24,20,0.7)); color: var(--cream); opacity: 0; transition: opacity 0.4s; }
+.grid-item:hover .grid-caption { opacity: 1; }
+.grid-caption-title { font-size: 1rem; font-weight: 300; letter-spacing: 0.05em; }
+.grid-caption-sub { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(245,242,236,0.6); margin-top: 0.25rem; }
+
+.services { background: var(--dark); color: var(--cream); padding: 8rem 3rem; }
+.services-inner { max-width: 1400px; margin: 0 auto; }
+.services-header { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-bottom: 6rem; }
+.services-title { font-size: clamp(2.5rem, 4vw, 4rem); font-weight: 300; line-height: 1.1; }
+.services-title em { font-style: italic; color: var(--accent); }
+.services-desc { font-size: 1rem; font-weight: 300; color: rgba(245,242,236,0.55); line-height: 1.9; align-self: end; }
+.services-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid rgba(245,242,236,0.1); }
+.service-item { padding: 3rem; border-right: 1px solid rgba(245,242,236,0.1); border-bottom: 1px solid rgba(245,242,236,0.1); transition: background 0.3s; }
+.service-item:nth-child(3n) { border-right: none; }
+.service-item:hover { background: rgba(245,242,236,0.03); }
+.service-num { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.2em; color: var(--accent); margin-bottom: 2rem; }
+.service-name { font-size: 1.5rem; font-weight: 300; margin-bottom: 1rem; line-height: 1.2; }
+.service-name em { font-style: italic; color: var(--accent); }
+.service-desc { font-size: 0.85rem; font-weight: 300; color: rgba(245,242,236,0.45); line-height: 1.8; margin-bottom: 2rem; }
+.service-price { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.15em; color: rgba(245,242,236,0.6); }
+
+.testimonials { padding: 8rem 3rem; max-width: 1400px; margin: 0 auto; }
+.testimonials-label { margin-bottom: 4rem; }
+.testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+.testimonial-card { padding: 2.5rem; border: 1px solid var(--border); }
+.testimonial-quote { font-size: 3rem; line-height: 1; color: var(--accent); font-weight: 300; margin-bottom: 1.5rem; }
+.testimonial-text { font-size: 0.95rem; font-weight: 300; color: var(--mid); line-height: 1.8; margin-bottom: 2rem; font-style: italic; }
+.testimonial-author { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+
+.contact { background: var(--dark); color: var(--cream); padding: 10rem 3rem; text-align: center; }
+.contact-inner { max-width: 700px; margin: 0 auto; }
+.contact-title { font-size: clamp(3rem, 6vw, 5rem); font-weight: 300; line-height: 1.05; margin-bottom: 1.5rem; }
+.contact-title em { font-style: italic; color: var(--accent); }
+.contact-sub { font-size: 1rem; font-weight: 300; color: rgba(245,242,236,0.5); margin-bottom: 3rem; line-height: 1.8; }
+.contact-email { font-family: var(--serif); font-size: clamp(1.2rem, 2.5vw, 1.8rem); font-weight: 300; color: var(--accent); text-decoration: none; letter-spacing: 0.05em; display: block; margin-bottom: 3rem; transition: color 0.3s; }
+.contact-email:hover { color: var(--cream); }
+.contact-socials { display: flex; gap: 2rem; justify-content: center; }
+.social-link { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(245,242,236,0.4); text-decoration: none; transition: color 0.3s; }
+.social-link:hover { color: var(--cream); }
+
+footer { background: var(--dark); border-top: 1px solid rgba(245,242,236,0.08); padding: 2rem 3rem; display: flex; justify-content: space-between; align-items: center; }
+.footer-copy { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.15em; color: rgba(245,242,236,0.25); }
+.footer-tag { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.15em; color: rgba(245,242,236,0.2); }
+
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 900px) {
+  nav { padding: 1.2rem 1.5rem; }
+  .nav-links { gap: 1.2rem; }
+  .hero { grid-template-columns: 1fr; }
+  .hero-left { padding: 6rem 1.5rem 3rem; }
+  .hero-right { min-height: 60vw; position: relative; }
+  .about { grid-template-columns: 1fr; padding: 4rem 1.5rem; }
+  .about-left { padding-right: 0; border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 3rem; margin-bottom: 3rem; }
+  .about-right { padding-left: 0; }
+  .portfolio { padding: 4rem 1.5rem; }
+  .grid-item:nth-child(1) { grid-column: span 12; }
+  .grid-item:nth-child(2), .grid-item:nth-child(3) { grid-column: span 6; }
+  .grid-item:nth-child(4), .grid-item:nth-child(5), .grid-item:nth-child(6) { grid-column: span 4; }
+  .services { padding: 4rem 1.5rem; }
+  .services-header { grid-template-columns: 1fr; gap: 1.5rem; }
+  .services-list { grid-template-columns: 1fr; }
+  .service-item { border-right: none; }
+  .testimonials { padding: 4rem 1.5rem; }
+  .testimonials-grid { grid-template-columns: 1fr; }
+  .contact { padding: 6rem 1.5rem; }
+  footer { flex-direction: column; gap: 1rem; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo" id="nav-name"></a>
+  <ul class="nav-links">
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow" id="hero-specialty"></p>
+    <h1 class="hero-title" id="hero-title"></h1>
+    <p class="hero-desc" id="hero-description"></p>
+    <div class="hero-cta">
+      <a href="#contact" class="btn-primary">Start a project</a>
+      <a href="#portfolio" class="btn-ghost">View portfolio</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img-wrap" id="hero-img-wrap"></div>
+  </div>
+</section>
+
+<div class="marquee-wrap">
+  <div class="marquee-track" id="marquee-track"></div>
+</div>
+
+<section class="about" id="about">
+  <div class="about-left reveal">
+    <p class="section-label">About me</p>
+    <h2 class="about-title" id="about-title"></h2>
+    <p class="about-text" id="about-text"></p>
+  </div>
+  <div class="about-right reveal">
+    <div class="stats-grid" id="stats-grid"></div>
+    <a href="#contact" class="btn-primary">Book a session</a>
+  </div>
+</section>
+
+<section class="portfolio" id="portfolio">
+  <div class="portfolio-header reveal">
+    <h2 class="portfolio-title">Selected <em>work</em></h2>
+    <a href="#" class="portfolio-link">View all</a>
+  </div>
+  <div class="grid" id="portfolio-grid"></div>
+</section>
+
+<section class="services" id="services">
+  <div class="services-inner">
+    <div class="services-header reveal">
+      <h2 class="services-title" id="services-title"></h2>
+      <p class="services-desc" id="services-desc"></p>
+    </div>
+    <div class="services-list" id="services-list"></div>
+  </div>
+</section>
+
+<section class="testimonials">
+  <div class="testimonials-label">
+    <p class="section-label reveal">Testimonials</p>
+  </div>
+  <div class="testimonials-grid" id="testimonials-grid"></div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <h2 class="contact-title reveal">Let's create <em>together</em></h2>
+    <p class="contact-sub reveal">Share your idea and receive a personalised proposal within 24 hours.</p>
+    <a id="contact-email" class="contact-email reveal" href="#"></a>
+    <div class="contact-socials reveal" id="contact-socials"></div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-copy" id="footer-copy"></span>
+  <span class="footer-tag">Template by [Your Brand]</span>
+</footer>
+
+<script>
+/* ============================================================
+   CONFIG SECTION — EDIT ONLY HERE
+   ============================================================ */
+const CONFIG = {
+
+  /* --- GENERAL INFO --- */
+  name:          "Anna Ferreira",
+  specialty:     "Photography & Visual Art",
+  email:         "anna@annaferreira.com",
+  year:          2025,
+
+  /* --- HERO --- */
+  heroTitle:       "The light that <em>defines</em> the moment",
+  heroDescription: "I capture stories through the lens — weddings, portraits and spaces that deserve to be immortalised with elegance and intention.",
+  heroImage:       "https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=1200&q=80", // e.g. "images/hero.jpg" — leave empty for placeholder
+
+  /* --- MARQUEE (categories shown in the animated scroll bar) --- */
+  marqueeItems: ["Weddings", "Portraits", "Editorial", "Architecture", "Events", "Fashion"],
+
+  /* --- ABOUT --- */
+  aboutTitle: "Photographer with <em>soul</em>, based in London",
+  aboutText:  "With over a decade of experience, I create images that go beyond the obvious. My approach combines rigorous technique with an artistic sensibility that results in photographs full of character and depth.<br><br>Every session is a collaboration — my role is to create the right environment so that authenticity appears naturally. I work with natural light whenever possible, and with a warm, earthy palette that has become my signature.",
+
+  /* --- STATS --- */
+  stats: [
+    { number: "12+", label: "Years of experience" },
+    { number: "340", label: "Sessions completed"  },
+    { number: "18",  label: "Countries covered"   },
+    { number: "4",   label: "Awards received"     },
+  ],
+
+  /* --- PORTFOLIO (6 images) --- */
+  portfolio: [
+    { image: "https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80", title: "Countryside Wedding",  category: "Wedding photography · 2024" },
+    { image: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=800&q=80", title: "Editorial Portrait",   category: "Fashion · London"           },
+    { image: "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80", title: "Modern Architecture",  category: "Real estate · Manchester"   },
+    { image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80", title: "Food & Gastronomy",    category: "Food styling"               },
+    { image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=800&q=80", title: "Individual Portrait",  category: "Studio session"             },
+    { image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80", title: "Corporate Event",      category: "Event photography"          },
+  ],
+
+  /* --- SERVICES --- */
+  servicesTitle: "What I <em>offer</em>",
+  servicesDesc:  "Each package is designed to give you exactly what you need — no unnecessary extras, no compromises on quality.",
+  services: [
+    { name: "Weddings <em>&</em> Events",    desc: "Full coverage of your special day, from preparations to the last dance. Online gallery delivered within 3 weeks.",  price: "From £1,200" },
+    { name: "Portraits <em>&</em> Families", desc: "1 to 2-hour sessions in carefully chosen locations. 40 edited high-resolution photographs.",                        price: "From £280"   },
+    { name: "Editorial <em>&</em> Fashion",  desc: "Productions for brands, designers and publications. Equipped studio available.",                                    price: "Custom quote" },
+    { name: "Real Estate <em>&</em> Architecture", desc: "Property photography that showcases every space. Delivered within 48h.",                                   price: "From £180"   },
+    { name: "Food <em>&</em> Product",       desc: "Food styling and product photography for restaurants, chefs and food brands. Styling session included.",           price: "From £350"   },
+    { name: "Aerial <em>&</em> Drone",       desc: "Unique perspectives with a certified drone. Landscapes, events, properties and architecture seen from above.",    price: "From £220"   },
+  ],
+
+  /* --- TESTIMONIALS --- */
+  testimonials: [
+    { text: "Anna captured exactly the essence of our wedding. We look at the photographs and feel everything again — the emotion, the joy, the perfect light of that day.", author: "Sarah & James · Wedding 2024" },
+    { text: "We worked with Anna for our spring campaign. The result exceeded all expectations — images that sell and tell a story.",                                         author: "Emily Clarke · Creative Director" },
+    { text: "Impeccable professionalism from start to finish. The property photos sold the apartment in less than a week. Highly recommended.",                               author: "Robert Hayes · Estate Agent" },
+  ],
+
+  /* --- SOCIAL LINKS --- */
+  socials: [
+    { name: "Instagram", url: "https://instagram.com/" },
+    { name: "Behance",   url: "https://behance.net/"   },
+    { name: "LinkedIn",  url: "https://linkedin.com/"  },
+  ],
+};
+/* ============================================================
+   END OF CONFIG SECTION
+   ============================================================ */
+
+
+/* --- Apply CONFIG to HTML --- */
+document.getElementById('nav-name').textContent         = CONFIG.name;
+document.getElementById('hero-specialty').textContent   = CONFIG.specialty;
+document.getElementById('hero-title').innerHTML         = CONFIG.heroTitle;
+document.getElementById('hero-description').textContent = CONFIG.heroDescription;
+document.getElementById('about-title').innerHTML        = CONFIG.aboutTitle;
+document.getElementById('about-text').innerHTML         = CONFIG.aboutText;
+document.getElementById('services-title').innerHTML     = CONFIG.servicesTitle;
+document.getElementById('services-desc').textContent    = CONFIG.servicesDesc;
+document.getElementById('footer-copy').textContent      = `© ${CONFIG.year} ${CONFIG.name}. All rights reserved.`;
+
+const emailEl = document.getElementById('contact-email');
+emailEl.textContent = CONFIG.email;
+emailEl.href = `mailto:${CONFIG.email}`;
+
+// Hero image
+const heroWrap = document.getElementById('hero-img-wrap');
+heroWrap.innerHTML = CONFIG.heroImage
+  ? `<img src="${CONFIG.heroImage}" class="hero-img" alt="${CONFIG.name}">`
+  : `<div class="hero-img-placeholder g1">Replace heroImage in CONFIG</div>`;
+
+// Marquee
+const marqueeTrack = document.getElementById('marquee-track');
+marqueeTrack.innerHTML = [...CONFIG.marqueeItems, ...CONFIG.marqueeItems]
+  .map(item => `<span class="marquee-item">${item}</span><span class="marquee-item marquee-dot">✦</span>`)
+  .join('');
+
+// Stats
+document.getElementById('stats-grid').innerHTML = CONFIG.stats.map(s => `
+  <div>
+    <div class="stat-num">${s.number}</div>
+    <div class="stat-label">${s.label}</div>
+  </div>`).join('');
+
+// Portfolio
+const gradients = ['g1','g2','g3','g4','g5','g6'];
+document.getElementById('portfolio-grid').innerHTML = CONFIG.portfolio.map((item, i) => `
+  <div class="grid-item reveal">
+    ${item.image
+      ? `<img src="${item.image}" class="grid-photo" alt="${item.title}">`
+      : `<div class="grid-placeholder ${gradients[i]}">Image ${String(i+1).padStart(2,'0')}</div>`}
+    <div class="grid-caption">
+      <div class="grid-caption-title">${item.title}</div>
+      <div class="grid-caption-sub">${item.category}</div>
+    </div>
+  </div>`).join('');
+
+// Services
+document.getElementById('services-list').innerHTML = CONFIG.services.map((s, i) => `
+  <div class="service-item reveal">
+    <div class="service-num">0${i+1}</div>
+    <h3 class="service-name">${s.name}</h3>
+    <p class="service-desc">${s.desc}</p>
+    <div class="service-price">${s.price}</div>
+  </div>`).join('');
+
+// Testimonials
+document.getElementById('testimonials-grid').innerHTML = CONFIG.testimonials.map(t => `
+  <div class="testimonial-card reveal">
+    <div class="testimonial-quote">"</div>
+    <p class="testimonial-text">${t.text}</p>
+    <div class="testimonial-author">${t.author}</div>
+  </div>`).join('');
+
+// Socials
+document.getElementById('contact-socials').innerHTML = CONFIG.socials.map(s =>
+  `<a href="${s.url}" class="social-link" target="_blank">${s.name}</a>`).join('');
+
+// Scroll reveal
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
